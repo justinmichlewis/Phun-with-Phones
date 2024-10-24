@@ -2,7 +2,7 @@
 #include "DFRobotDFPlayerMini.h"
 #include <SoftwareSerial.h>
 
-SoftwareSerial softSerial(/*rx =*/10, /*tx =*/11);
+SoftwareSerial softSerial(/*rx =*/12, /*tx =*/11);
 #define FPSerial softSerial
 
 DFRobotDFPlayerMini myDFPlayer;
