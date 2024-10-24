@@ -77,3 +77,11 @@ void displayAdmirerNotFound()
   lcd.setCursor(0, 1);
   lcd.print("found.");
 }
+
+void displaySetUp()
+{
+  lcd.clear();
+  lcd.print("Males(A) Both(B)");
+  lcd.setCursor(0, 1);
+  lcd.print("Females(C)");
+}

@@ -10,6 +10,8 @@
 #define female 3
 #define maleFemale 4
 
+int isSetUp = true;
+char admirerGroup = 'M';
 int admirerId = 0;
 bool admirerCheck = false;
 int keyIndex = 0;
@@ -26,12 +28,10 @@ void setup()
   // Setup.debug
   Serial.begin(115200);
   initializeAudio();
-  Serial.println("Setup complete.");
   admirerId = getRandomPerson(10);
-  Serial.print("Admirer ID: ");
-  Serial.println(admirerId);
-  initializeDisplay("Welcome to", "Phun with Phones", 0);
-  resetDisplayPhoneCall();
+  initializeDisplay("Welcome to", "Phun with Phones", 2000);
+  displaySetUp();
+  // resetDisplayPhoneCall();
 }
 
 void loop()
@@ -52,10 +52,17 @@ void loop()
       memset(keyArray, 0, sizeof(keyArray));
       return;
     }
+    else if (key == 'C' && isSetUp)
+    {
+      resetDisplayPhoneCall();
+      admirerGroup = 'F';
+      isSetUp = false;
+    }
 
     if (key == 'A' && !isConnected)
     {
-
+      Serial.println("Admirer Group: ");
+      Serial.println(admirerGroup);
       People person = findPerson(keyArray);
 
       playRing(15);
@@ -75,6 +82,19 @@ void loop()
       memset(keyArray, 0, sizeof(keyArray));
       keyIndex = 0;
     }
+    else if (key == 'A' && isSetUp)
+    {
+      admirerGroup = 'M';
+      resetDisplayPhoneCall();
+      isSetUp = false;
+    }
+
+    if (key == 'B' && isSetUp)
+    {
+      admirerGroup = 'B';
+      resetDisplayPhoneCall();
+      isSetUp = false;
+    }
 
     if (keyIndex < 7 && key != 'A' && key != 'C')
     {
@@ -87,10 +107,6 @@ void loop()
 
     if (key == '#')
     {
-      Serial.println("Checking for admirer...");
-      Serial.println(keyArray);
-      Serial.println("Admirer number:");
-      Serial.println(peopleMale[admirerId - 1].number);
       if (!admirerCheck)
       {
         displayAdmirer();
