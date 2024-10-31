@@ -28,18 +28,21 @@ void setup()
   // Setup.debug
   Serial.begin(115200);
   initializeAudio();
-  admirerId = getRandomPerson(10);
-  initializeDisplay("Welcome to", "Phun with Phones", 2000);
-  displaySetUp();
+  // admirerId = getRandomPerson(10);
+  // initializeDisplay("Phun with Phones", "", 2000);
+  // displaySetUp();
   // resetDisplayPhoneCall();
+  playRing(20);
 }
 
 void loop()
 {
+
   char key = getKeyPressed();
 
   if (key != '\0')
   {
+    Serial.println(key);
     if (keyIndex == 0)
     {
       clearDisplay();
@@ -57,6 +60,11 @@ void loop()
       resetDisplayPhoneCall();
       admirerGroup = 'F';
       isSetUp = false;
+    }
+    if (key == 'D')
+    {
+      Serial.println("Dialing...");
+      playRing(15);
     }
 
     if (key == 'A' && !isConnected)
